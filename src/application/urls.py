@@ -20,6 +20,9 @@ app.add_url_rule('/_ah/warmup', 'warmup', view_func=views.warmup)
 #app.add_url_rule('/', 'home', view_func=views.home)
 app.add_url_rule('/', 'home', view_func=views.home)
 
+# Spiral demo page
+app.add_url_rule('/demo-spiral', 'demo-spiral', view_func=views.demo_spiral)
+
 # Say hello
 app.add_url_rule('/hello/<username>', 'say_hello', view_func=views.say_hello)
 

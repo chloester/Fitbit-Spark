@@ -35,6 +35,9 @@ gclient = gdata.spreadsheet.service.SpreadsheetsService(
 def home():
     return render_template('base.html')
 
+def demo_spiral():
+	return render_template("demo-spiral.html")
+
 
 def say_hello(username):
     """Contrived example to demonstrate Flask's url routing capabilities"""
