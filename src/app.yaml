@@ -1,0 +1,52 @@
+application: fitbit-spark
+version: 1
+runtime: python
+api_version: 1
+
+default_expiration: "2d"
+
+builtins:
+- appstats: on
+- datastore_admin: on
+- deferred: on
+- remote_api: on
+
+inbound_services:
+- warmup
+
+handlers:
+- url: /favicon.ico
+  static_files: application/static/img/favicon.ico
+  upload: application/static/img/favicon.ico
+
+- url: /robots.txt
+  static_files: application/static/robots.txt
+  upload: application/static/robots.txt
+
+- url: /googlec2a6c3d14fbe6ece.html
+  static_files: application/static/googlec2a6c3d14fbe6ece.html
+  upload: application/static/googlec2a6c3d14fbe6ece.html
+
+- url: /static
+  static_dir: application/static
+
+- url: .*
+  script: main.py
+
+skip_files: |
+ ^(.*/)?(
+ (app\.yaml)|
+ (index\.yaml)|
+ (#.*#)|
+ (.*~)|
+ (.*\.py[co])|
+ (\..*)|
+ ^(go\.)|
+ (Thumbs.db)|
+ (\.bat)|
+ (\.sh)|
+ (\.pkl)|
+ (\.datastore)|
+ (remote_console.py)|
+ (static/less/.*)|
+ )$
