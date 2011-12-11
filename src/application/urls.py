@@ -8,7 +8,9 @@ URL dispatch route mappings and error handlers
 from flask import render_template
 
 from application import app
-from application import views
+from application.views import views
+from application.views import fitbit_api
+from application.views.fitbit_api import fitbit
 
 
 ## URL dispatch rules
@@ -17,11 +19,16 @@ from application import views
 app.add_url_rule('/_ah/warmup', 'warmup', view_func=views.warmup)
 
 # Home page
-#app.add_url_rule('/', 'home', view_func=views.home)
 app.add_url_rule('/', 'home', view_func=views.home)
 
-# Spiral demo page
+# Fitbit Oauth
+app.add_url_rule('/fitbit/unauth', 'fitbit-unauth', view_func=fitbit.unauth)
+app.add_url_rule('/fitbit/auth', 'fitbit-auth', view_func=fitbit.auth)
+app.add_url_rule('/fitbit/return', 'fitbit-return', view_func=fitbit.return_)
+
+# Demo pages
 app.add_url_rule('/demo-spiral', 'demo-spiral', view_func=views.demo_spiral)
+app.add_url_rule('/demo-fauna', 'demo-fauna', view_func=views.demo_fauna)
 
 # Say hello
 app.add_url_rule('/hello/<username>', 'say_hello', view_func=views.say_hello)

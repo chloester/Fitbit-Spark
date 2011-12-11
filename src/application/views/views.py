@@ -20,17 +20,11 @@ from google.appengine.runtime.apiproxy_errors import CapabilityDisabledError
 
 from flask import request, render_template, flash, url_for, redirect
 
-from models import ExampleModel
-from decorators import login_required, admin_required
-from forms import ExampleForm
+from application.models import ExampleModel
+from application.decorators import login_required, admin_required
+from application.forms import ExampleForm
 
-import settings
-import gdata.spreadsheets.client
-import gdata.spreadsheet.service
-
-# Create an instance of the DocsService to make API calls
-gclient = gdata.spreadsheet.service.SpreadsheetsService(
-    source=settings.APPLICATION_NAME)
+import application.settings
 
 def home():
     return render_template('base.html')
@@ -38,6 +32,8 @@ def home():
 def demo_spiral():
 	return render_template("demo-spiral.html")
 
+def demo_fauna():
+	return render_template("demo-fauna.html")
 
 def say_hello(username):
     """Contrived example to demonstrate Flask's url routing capabilities"""
