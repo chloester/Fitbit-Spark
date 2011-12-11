@@ -77,8 +77,7 @@ class OAuthToken(object):
             key = params['oauth_token'][0]
             secret = params['oauth_token_secret'][0]
         except KeyError:
-            logging.error("No token string in from_string %s? (params %s)\n%s"%(
-                    s, params, traceback.format_stack()))
+            logging.error("No token string in from_string %s?"%(s[:200]))
             key, secret = None, None
         return OAuthToken(key, secret)
 

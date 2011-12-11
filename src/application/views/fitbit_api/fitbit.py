@@ -44,11 +44,16 @@ def return_():
     user = users.get_current_user().email()
     ts = FitbitToken.getFor(user)
     if not ts.unauthed_token:
-        return HttpResponse("No un-authed token cookie")
-    token = oauth.OAuthToken.from_string(ts.unauthed_token)   
+        return "No un-authed token cookie"
+    token = oauth.OAuthToken.from_string(ts.unauthed_token)
     if token.key != request.values['oauth_token']:
-        return HttpResponse("Something went wrong! Tokens do not match")
-    access_token = exchange_request_token_for_access_token(CONSUMER, token)
+        return ("Something went wrong! Tokens do not match. Our key is %s, "
+                "and we got %s back."%(token.key,request.values['oauth_token']))
+    access_token = exchange_request_token_for_access_token(
+        CONSUMER, token,
+        parameters={'oauth_verifier': request.values['oauth_verifier']})
+    if not access_token.key and not access_token.secret:
+        return "No access token; it didn't work. Check the logs."
     ts.access_token = access_token.to_string()
     ts.unauthed_token = ''
     fitbit_name = get_fitbit_name(CONSUMER, access_token)
