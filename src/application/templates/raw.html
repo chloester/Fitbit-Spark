@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="span16">
+	{{data}}
+</div>
+
+// js area
+var step_data = {{data|safe_js}};
+for(step in step_data["intraday-steps"]["dataset"])
+{% endblock %}

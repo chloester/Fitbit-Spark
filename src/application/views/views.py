@@ -20,25 +20,39 @@ from google.appengine.runtime.apiproxy_errors import CapabilityDisabledError
 
 from flask import request, render_template, flash, url_for, redirect
 
+from application import app
 from application.models import ExampleModel
 from application.decorators import login_required, admin_required
 from application.forms import ExampleForm
+from application.views.fitbit_api import fitbit
 
 import application.settings
 
+@app.context_processor
+def inject_var():
+    context = {}
+    context["user"] = users.get_current_user()
+    if context["user"]:
+        context["ts"] = fitbit.FitbitToken.getFor(context["user"].email())
+        context["logout_url"] = users.create_logout_url("/")        
+    return context
+
 def home():
-    return render_template('base.html')
+    return render_template('home.html')
 
 def demo_spiral():
-	return render_template("demo-spiral.html")
+    return render_template("demo-spiral.html")
 
 def demo_fauna():
-	return render_template("demo-fauna.html")
+    return render_template("demo-fauna.html")
 
 def say_hello(username):
     """Contrived example to demonstrate Flask's url routing capabilities"""
     return 'Hello %s' % username
 
+def raw():
+    
+    return render_template("raw.html", data=fitbit.get_intraday_steps())
 
 def list_examples():
     """List all examples"""

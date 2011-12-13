@@ -30,6 +30,9 @@ app.add_url_rule('/fitbit/return', 'fitbit-return', view_func=fitbit.return_)
 app.add_url_rule('/demo-spiral', 'demo-spiral', view_func=views.demo_spiral)
 app.add_url_rule('/demo-fauna', 'demo-fauna', view_func=views.demo_fauna)
 
+# My step data
+app.add_url_rule('/raw', 'raw', view_func=views.raw)
+
 # Say hello
 app.add_url_rule('/hello/<username>', 'say_hello', view_func=views.say_hello)
 

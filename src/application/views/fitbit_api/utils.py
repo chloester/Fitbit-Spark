@@ -19,7 +19,7 @@ REQUEST_TOKEN_URL = 'https://%s/oauth/request_token' % OTHER_SERVER
 ACCESS_TOKEN_URL = 'https://%s/oauth/access_token' % OTHER_SERVER
 AUTHORIZATION_URL = 'https://%s/oauth/authorize' % SERVER
 if os.environ['SERVER_SOFTWARE'].startswith('Development'):
-    CALLBACK_URL = 'http://localhost:9001/fitbit/return'
+    CALLBACK_URL = 'http://localhost:8008/fitbit/return'
 else:
     CALLBACK_URL = 'http://%s/fitbit/return'%(
         app_identity.get_default_version_hostname())
@@ -30,8 +30,7 @@ CONSUMER_SECRET = application.secret_keys.CONSUMER_SECRET
 # We use this URL to check if Fitbit's oAuth worked
 BASE = 'https://api.fitbit.com'
 GET_USER_INFO = '%s/1/user/-/profile.json' %BASE
-TWITTER_FRIENDS = 'https://twitter.com/statuses/friends.json'
-TWITTER_UPDATE_STATUS = 'https://twitter.com/statuses/update.json'
+GET_INTRADAY_STEPS = '%s/1/user/-/activities/log/steps/date/today/1d.json' %BASE
 
 def request_oauth_resource(consumer, url, access_token, parameters=None, signature_method=signature_method, http_method="GET"):
     """
@@ -49,7 +48,7 @@ def request_oauth_resource(consumer, url, access_token, parameters=None, signatu
 def fetch_response(oauth_request):
     headers = oauth_request.to_header()
     if oauth_request.http_method == 'GET':
-        url = oauth_request.to_url()
+        url = oauth_request.get_normalized_http_url()
     else:
         url = oauth_request.get_normalized_http_url()
     logging.info("Fetching %s with %s; headers %s"%(url, oauth_request.http_method, headers))
@@ -64,7 +63,6 @@ def get_unauthorised_request_token(consumer, signature_method=signature_method):
     resp = fetch_response(oauth_request)
     token = oauth.OAuthToken.from_string(resp)
     return token
-
 
 def get_authorisation_url(consumer, token, signature_method=signature_method):
     oauth_request = oauth.OAuthRequest.from_consumer_and_token(
@@ -84,29 +82,5 @@ def exchange_request_token_for_access_token(consumer, request_token, signature_m
         logging.error("Got no token for %s"%(oauth_request.get_normalized_http_url()))
     return token
 
-
-
-def get_user_info(consumer, access_token):
-    oauth_request = request_oauth_resource(consumer, GET_USER_INFO, access_token)
-    json = fetch_response(oauth_request)
-    logging.info("json result of oauth request: %r"%json)
-    if 'displayName' in json:
-        return json
-    return False
-
-def get_friends(consumer, access_token, page=0):
-    """Get friends on Twitter"""
-    oauth_request = request_oauth_resource(consumer, TWITTER_FRIENDS, access_token, {'page': page})
-    json = fetch_response(oauth_request)
-    return json
-
-def update_status(consumer, access_token, status):
-    """Update twitter status, i.e., post a tweet"""
-    oauth_request = request_oauth_resource(consumer,
-                                           TWITTER_UPDATE_STATUS,
-                                           access_token,
-                                           {'status': status},
-                                           http_method='POST')
-    json = fetch_response(oauth_request)
-    return json
+	
 

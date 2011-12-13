@@ -34,6 +34,8 @@ def auth():
     auth_url = get_authorisation_url(CONSUMER, token)
     user = users.get_current_user().email()
     ts = FitbitToken.getFor(user)
+    if ts.access_token:
+        return redirect(url_for('home'))
     ts.unauthed_token = token.to_string()
     ts.put()
     return redirect(auth_url)
@@ -56,19 +58,34 @@ def return_():
         return "No access token; it didn't work. Check the logs."
     ts.access_token = access_token.to_string()
     ts.unauthed_token = ''
-    fitbit_name = get_fitbit_name(CONSUMER, access_token)
+    ts.put()
+    fitbit_name = get_fitbit_name()
     ts.fitbit_name = fitbit_name
     ts.put()
-    return redirect(url_for('demo-spiral'))
+    return redirect(url_for('home'))
 
-def get_fitbit_name(CONSUMER, token):
-    info = get_user_info(CONSUMER, token)
-    if info:
+def get_fitbit_name():
+    user = users.get_current_user().email()
+    ts = FitbitToken.getFor(user)
+    access_token = oauth.OAuthToken.from_string(ts.access_token)
+    oauth_request = request_oauth_resource(CONSUMER, GET_USER_INFO, access_token)
+    info = fetch_response(oauth_request)
+    logging.info("json result of oauth request: %r"%info)
+    if "displayName" in info:
         creds = simplejson.loads(info)
         return creds['user']['displayName']
     else:
-        logging.warning("Auth token didn't work: %s"%token)
+        logging.warning("Auth token didn't work: %s"%access_token)
         return ''
+
+def get_intraday_steps():
+    user = users.get_current_user().email()
+    ts = FitbitToken.getFor(user)
+    access_token = oauth.OAuthToken.from_string(ts.access_token)
+    oauth_request = request_oauth_resource(CONSUMER, GET_INTRADAY_STEPS, access_token)
+    json = fetch_response(oauth_request)
+    logging.info("json result of get intraday steps: %s"%json)
+    return json
 
 def post_tweet(user, tweet):
     ts = FitbitToken.getFor(user)
