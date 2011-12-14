@@ -8,6 +8,13 @@ footer {
 </style>
 {% endblock %}
 
+{% block content %}
+<h3>{{date}}</h3>
+<h1>{{total}}<small> total steps today</small></h1>
+
+<div id="graph"></div>
+{% endblock %}
+
 {% block footer_script %}
 <script src="static/js/raphael-min.js"></script>
 <script src="static/js/graphvars.js"></script>
