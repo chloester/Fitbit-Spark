@@ -1,16 +1,4 @@
 window.onload = function() {
-	var xStart = margin;
-	var yStart = wh/2;
-	var xLoc = xStart;
-	var yLoc = yStart;
-	var pathString = "M"+xStart+" "+yStart;
-	
-	var textPadding = 10;
-	var speed = 200; // default:500 fast:100
-	
-	// time counter
-	var time = paper.text(textPadding,textPadding,"");
-	time.attr({"text-anchor":"start", "font-size":12, "fill":"#ffffff"});
 
 	// init variables needed for circles and spiral
 	var i = 0;

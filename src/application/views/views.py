@@ -49,8 +49,8 @@ def home():
 def demo_spiral():
     return render_template("demo-spiral.html")
 
-def demo_fauna():
-    return render_template("demo-fauna.html")
+def demo_flora():
+    return render_template("demo-flora.html")
     
 def spiral():
     return render_template("spiral.html")

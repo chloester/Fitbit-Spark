@@ -28,7 +28,7 @@ app.add_url_rule('/fitbit/return', 'fitbit-return', view_func=fitbit.return_)
 
 # Demo pages
 app.add_url_rule('/demo-spiral', 'demo-spiral', view_func=views.demo_spiral)
-app.add_url_rule('/demo-fauna', 'demo-fauna', view_func=views.demo_fauna)
+app.add_url_rule('/demo-flora', 'demo-flora', view_func=views.demo_flora)
 
 # Visualizations
 app.add_url_rule('/spiral', 'spiral', view_func=views.spiral)

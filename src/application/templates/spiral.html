@@ -6,6 +6,7 @@
 <script>
 window.onload = function() {
 	var log = {{data|tojson|safe}}; // log[index].value
+	var increment = 1; // x-minute increments
 	var size = log.length
 	var xStart = margin;
 	var yStart = wh/2;
@@ -72,6 +73,8 @@ window.onload = function() {
 {% endblock %}
 
 {% block content %}
-<p>Total steps on {{date}}: {{total}}</p>
+<h3>{{date}}</h3>
+<h1>{{total}}<small> total steps today</small></h1>
+
 <div id="graph"></div>
 {% endblock %}
