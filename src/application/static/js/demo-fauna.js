@@ -21,19 +21,19 @@ window.onload = function() {
 
 	function update() {
 		if(i != numLogs) {
-			time.attr("text",log[i][dateIndex]);
+			time.attr("text",demolog[i][dateIndex]);
 
 			// // with gaps
 			// // set up new circle
-			// if (log[i][stepsIndex] > 0) {
-			// 	var radius = log[i][stepsIndex]/50+totalR; // default:/15
-			// 	var color = setColor(log[i][homeIndex],log[i][outIndex]);
+			// if (demolog[i][stepsIndex] > 0) {
+			// 	var radius = demolog[i][stepsIndex]/50+totalR; // default:/15
+			// 	var color = setColorDemo(demolog[i][homeIndex],demolog[i][outIndex]);
 			// } else {
 			// 	var radius = 1 + totalR;
 			// 	var color = "hsb(0,0,0)";
 			// }
 			// // draw circle and add it to faunaArray
-			// //if (log[i][stepsIndex] > 0) {
+			// //if (demolog[i][stepsIndex] > 0) {
 			// var circle = paper.circle(ww/2,wh/2,radius);
 			// circle.attr({"stroke-width":0, "fill":color, "fill-opacity":0.9});
 			// circle.toBack();
@@ -41,11 +41,11 @@ window.onload = function() {
 			
 			// without gaps
 			// set up new circle
-			var radius = log[i][stepsIndex]/50+totalR;
-			var color = setColor(log[i][homeIndex],log[i][outIndex]);
+			var radius = demolog[i][stepsIndex]/50+totalR;
+			var color = setColorDemo(demolog[i][homeIndex],demolog[i][outIndex]);
 
 			// draw circle and add it to faunaArray
-			if (log[i][stepsIndex] > 0) {
+			if (demolog[i][stepsIndex] > 0) {
 				var circle = paper.circle(ww/2,wh/2,radius);
 				circle.attr({"stroke-width":0, "fill":color, "fill-opacity":0.9});
 				circle.toBack();

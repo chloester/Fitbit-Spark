@@ -26,6 +26,8 @@ from application.decorators import login_required, admin_required
 from application.forms import ExampleForm
 from application.views.fitbit_api import fitbit
 
+from django.utils import simplejson
+
 import application.settings
 
 @app.context_processor
@@ -34,7 +36,11 @@ def inject_var():
     context["user"] = users.get_current_user()
     if context["user"]:
         context["ts"] = fitbit.FitbitToken.getFor(context["user"].email())
-        context["logout_url"] = users.create_logout_url("/")        
+        context["logout_url"] = users.create_logout_url("/")
+        context["raw"] = simplejson.loads(fitbit.get_intraday_steps())
+        context["data"] = context["raw"]["activities-log-steps-intraday"]["dataset"]
+        context["date"] = context["raw"]["activities-log-steps"][0]["dateTime"]
+        context["total"] = context["raw"]["activities-log-steps"][0]["value"]
     return context
 
 def home():
@@ -45,13 +51,15 @@ def demo_spiral():
 
 def demo_fauna():
     return render_template("demo-fauna.html")
+    
+def spiral():
+    return render_template("spiral.html")
 
 def say_hello(username):
     """Contrived example to demonstrate Flask's url routing capabilities"""
     return 'Hello %s' % username
 
 def raw():
-    
     return render_template("raw.html", data=fitbit.get_intraday_steps())
 
 def list_examples():

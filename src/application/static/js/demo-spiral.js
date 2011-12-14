@@ -24,11 +24,11 @@ window.onload = function() {
 
 	function update() {
 		if(i != numLogs) {
-			time.attr("text",log[i][dateIndex]);
+			time.attr("text",demolog[i][dateIndex]);
 
 			// set up new circle
-			var radius = log[i][stepsIndex]/15; // default:/15
-			var color = setColor(log[i][homeIndex],log[i][outIndex]);
+			var radius = demolog[i][stepsIndex]/15; // default:/15
+			var color = setColorDemo(demolog[i][homeIndex],demolog[i][outIndex]);
 			//console.log(color);
 			// draw circle and add it to spiralArray
 			if (radius > 0) {
@@ -68,10 +68,10 @@ window.onload = function() {
 	// 	for(var i = 0; i < numLogs; i++) {
 	// 		xLoc = xLoc+margin;
 	// 		// if home, draw below half of y
-	// 		if (log[i][homeIndex] == 1) {
-	// 			yLoc = yStart+(log[i][stepsIndex])/2;
+	// 		if (demolog[i][homeIndex] == 1) {
+	// 			yLoc = yStart+(demolog[i][stepsIndex])/2;
 	// 		} else {
-	// 			yLoc = yStart-(log[i][stepsIndex])/2;
+	// 			yLoc = yStart-(demolog[i][stepsIndex])/2;
 	// 		}
 	// 		pathString = pathString.concat("V"+yLoc+"M"+xLoc+" "+yStart);
 	// 	}
@@ -85,10 +85,10 @@ window.onload = function() {
 	// 	for(var i = 0; i < numLogs; i++) {
 	// 		xLoc = xLoc+margin;
 	// 		// if home, draw below half of y
-	// 		if (log[i][outIndex] == 1) {
-	// 			yLoc = yStart-(log[i][stepsIndex])/2;
+	// 		if (demolog[i][outIndex] == 1) {
+	// 			yLoc = yStart-(demolog[i][stepsIndex])/2;
 	// 		} else {
-	// 			yLoc = yStart+(log[i][stepsIndex])/2;
+	// 			yLoc = yStart+(demolog[i][stepsIndex])/2;
 	// 		}
 	// 		pathString = pathString.concat("V"+yLoc+"M"+xLoc+" "+yStart);
 	// 	}

@@ -30,21 +30,17 @@ app.add_url_rule('/fitbit/return', 'fitbit-return', view_func=fitbit.return_)
 app.add_url_rule('/demo-spiral', 'demo-spiral', view_func=views.demo_spiral)
 app.add_url_rule('/demo-fauna', 'demo-fauna', view_func=views.demo_fauna)
 
+# Visualizations
+app.add_url_rule('/spiral', 'spiral', view_func=views.spiral)
+
 # My step data
 app.add_url_rule('/raw', 'raw', view_func=views.raw)
 
 # Say hello
 app.add_url_rule('/hello/<username>', 'say_hello', view_func=views.say_hello)
 
-# Examples list page
-app.add_url_rule('/examples', 'list_examples', view_func=views.list_examples)
-
-# Add new example via web form
-app.add_url_rule('/example/new', 'new_example', view_func=views.new_example, methods=['GET', 'POST'])
-
 # Contrived admin-only view example
 app.add_url_rule('/admin_only', 'admin_only', view_func=views.admin_only)
-
 
 ## Error handlers
 # Handle 404 errors

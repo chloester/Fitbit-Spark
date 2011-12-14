@@ -1,0 +1,77 @@
+{% extends "vis_base.html" %}
+
+{% block title %}Spiral{% endblock %}
+
+{% block graph_script %}
+<script>
+window.onload = function() {
+	var log = {{data|tojson|safe}}; // log[index].value
+	var size = log.length
+	var xStart = margin;
+	var yStart = wh/2;
+	var xLoc = xStart;
+	var yLoc = yStart;
+	var pathString = "M"+xStart+" "+yStart;
+	
+	var textPadding = 10;
+	var speed = 0; // default:500 fast:100
+	
+	// time counter
+	var time = paper.text(textPadding,textPadding,"");
+	time.attr({"text-anchor":"start", "font-size":12, "fill":"#ffffff"});
+
+	// init variables needed for circles and spiral
+	var i = 0;
+	var spiralArray = [];
+	// circle's spiral path
+	var deg = 20;
+	var rVelocity = 0.3; // speed at which distance from center increases
+	var thetaVelocity = deg*Math.PI/180; // angle at which dot moves along spiral
+
+	setInterval(update,speed);
+
+	function update() {
+		if(i != size) {
+			time.attr("text",log[i].time);
+
+			// set up new circle
+			var radius = log[i].value/(window.innerHeight/60);
+			var color = setColor(log[i].value);
+			// draw circle and add it to spiralArray
+			if (radius > 0) {
+				var circle = paper.circle(ww/2,wh/2,radius);
+				circle.attr({"stroke-width":0, "fill":color, "fill-opacity":0.95});
+				//circle.attr({"cx":ww/2, "cy":wh/2});
+				spiralArray.unshift({circle:circle, r:10, theta:0});
+			}
+			// place and move all circles in the array
+			for (var j = 0; j < spiralArray.length; j++) {
+				updateCircle(spiralArray[j]);
+			}
+
+			i++;
+		}
+	}
+
+	//setInterval(updateCircle,100);
+	function updateCircle(c) {
+		c.r += rVelocity;
+		c.theta += thetaVelocity;
+		newcx = c.r * Math.cos(c.theta);
+		newcy = c.r * Math.sin(c.theta);
+		oldfill = c.circle.attr("fill-opacity");
+		if (oldfill > 0.01) {
+			c.circle.animate({cx:(ww/2)+newcx, cy:(wh/2)+newcy, "fill-opacity":(ww/2-c.r)/(ww/2)},speed);
+		} else {
+			c.circle.remove();
+		}
+	}
+
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<p>Total steps on {{date}}: {{total}}</p>
+<div id="graph"></div>
+{% endblock %}

@@ -84,7 +84,7 @@ def get_intraday_steps():
     access_token = oauth.OAuthToken.from_string(ts.access_token)
     oauth_request = request_oauth_resource(CONSUMER, GET_INTRADAY_STEPS, access_token)
     json = fetch_response(oauth_request)
-    logging.info("json result of get intraday steps: %s"%json)
+    #logging.info("json result of get intraday steps: %s"%json)
     return json
 
 def post_tweet(user, tweet):
