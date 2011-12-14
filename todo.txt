@@ -1,0 +1,2 @@
+Interactive data - can mouseover to show time and value
+Use subscription to automatically update data
