@@ -6,20 +6,8 @@
 <script>
 window.onload = function() {
 	var log = {{data|tojson|safe}}; // log[index].value
-	var increment = 1; // x-minute increments
 	var size = log.length
-	var xStart = margin;
-	var yStart = wh/2;
-	var xLoc = xStart;
-	var yLoc = yStart;
-	var pathString = "M"+xStart+" "+yStart;
-	
-	var textPadding = 10;
-	var speed = 0; // default:500 fast:100
-	
-	// time counter
-	var time = paper.text(textPadding,textPadding,"");
-	time.attr({"text-anchor":"start", "font-size":12, "fill":"#ffffff"});
+	var increment = 1; // x-minute increments
 
 	// init variables needed for circles and spiral
 	var i = 0;
@@ -29,6 +17,7 @@ window.onload = function() {
 	var rVelocity = 0.3; // speed at which distance from center increases
 	var thetaVelocity = deg*Math.PI/180; // angle at which dot moves along spiral
 
+	var speed = 0;
 	setInterval(update,speed);
 
 	function update() {

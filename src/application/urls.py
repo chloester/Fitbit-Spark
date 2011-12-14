@@ -32,8 +32,9 @@ app.add_url_rule('/demo-flora', 'demo-flora', view_func=views.demo_flora)
 
 # Visualizations
 app.add_url_rule('/spiral', 'spiral', view_func=views.spiral)
+app.add_url_rule('/flora', 'flora', view_func=views.flora)
 
-# My step data
+# Raw data
 app.add_url_rule('/raw', 'raw', view_func=views.raw)
 
 # Say hello

@@ -54,6 +54,9 @@ def demo_flora():
     
 def spiral():
     return render_template("spiral.html")
+    
+def flora():
+    return render_template("flora.html")
 
 def say_hello(username):
     """Contrived example to demonstrate Flask's url routing capabilities"""
