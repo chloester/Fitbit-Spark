@@ -38,10 +38,32 @@ def inject_var():
         context["ts"] = fitbit.FitbitToken.getFor(context["user"].email())
         context["logout_url"] = users.create_logout_url("/")
         context["raw"] = simplejson.loads(fitbit.get_intraday_steps())
-        context["data"] = context["raw"]["activities-log-steps-intraday"]["dataset"]
-        context["date"] = context["raw"]["activities-log-steps"][0]["dateTime"]
+        context["log1m"] = context["raw"]["activities-log-steps-intraday"]["dataset"]
+        context["log5m"] = convert5m(context["log1m"])
+        context["date"] = convertdate(context["raw"]["activities-log-steps"][0]["dateTime"])
         context["total"] = context["raw"]["activities-log-steps"][0]["value"]
     return context
+    
+def convert5m(l):
+    """ Turn 1 minute intraday log into 5 minute log """
+    new_list = []
+    new_entry = {}
+    total = 0
+    for entry in l:
+        total += int(entry["value"])
+        if entry["time"][4] in ("0","5"):
+            new_entry["time"] = entry["time"]
+            new_entry["value"] = total
+            new_list.append(new_entry)
+            total = 0
+            new_entry = {}
+    return new_list
+    
+def convertdate(s):
+    """ Converts string into date """
+    t1 = time.strptime(s,'%Y-%m-%d')
+    t2 = time.strftime('%A, %B %d, %Y',t1)
+    return t2
 
 def home():
     return render_template('home.html')
@@ -57,6 +79,9 @@ def spiral():
     
 def flora():
     return render_template("flora.html")
+    
+def bucket():
+    return render_template("bucket.html")
 
 def say_hello(username):
     """Contrived example to demonstrate Flask's url routing capabilities"""

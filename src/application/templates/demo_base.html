@@ -1,5 +1,13 @@
 {% extends "base.html" %}
 
+{% block style_block %}
+<style>
+footer {
+    border:0;
+}
+</style>
+{% endblock %}
+
 {% block content %}
 	<div id="graph"></div>
 {% endblock %}
@@ -13,6 +21,6 @@
 
 {% block footer_script %}
 <script src="static/js/raphael-min.js"></script>
-<script src="static/js/graphvars.js"></script>
+<script src="static/js/graphsetup.js"></script>
 {% block graph_script %}{% endblock %}
 {% endblock %}

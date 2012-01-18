@@ -1,13 +1,5 @@
 {% extends "demo_base.html" %}
 
-{% block style_block %}
-<style>
-footer {
-    border:0;
-}
-</style>
-{% endblock %}
-
 {% block content %}
 <h3>{{date}}</h3>
 <h1>{{total}}<small> total steps today</small></h1>
@@ -17,6 +9,6 @@ footer {
 
 {% block footer_script %}
 <script src="static/js/raphael-min.js"></script>
-<script src="static/js/graphvars.js"></script>
+<script src="static/js/graphsetup.js"></script>
 {% block graph_script %}{% endblock %}
 {% endblock %}

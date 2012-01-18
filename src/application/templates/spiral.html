@@ -5,7 +5,7 @@
 {% block graph_script %}
 <script>
 window.onload = function() {
-	var log = {{data|tojson|safe}}; // log[index].value
+	var log = {{log5m|tojson|safe}}; // log[index].value
 	var size = log.length
 	var increment = 1; // x-minute increments
 
@@ -14,7 +14,7 @@ window.onload = function() {
 	var spiralArray = [];
 	// circle's spiral path
 	var deg = 20;
-	var rVelocity = 0.3; // speed at which distance from center increases
+	var rVelocity = 1.2; // speed at which distance from center increases log1m:0.3, log5m:1
 	var thetaVelocity = deg*Math.PI/180; // angle at which dot moves along spiral
 
 	var speed = 0;
@@ -30,8 +30,7 @@ window.onload = function() {
 			// draw circle and add it to spiralArray
 			if (radius > 0) {
 				var circle = paper.circle(ww/2,wh/2,radius);
-				circle.attr({"stroke-width":0, "fill":color, "fill-opacity":0.95});
-				//circle.attr({"cx":ww/2, "cy":wh/2});
+				circle.attr({"stroke-width":0, "stroke":"none", "fill":color, "fill-opacity":0.9});
 				spiralArray.unshift({circle:circle, r:10, theta:0});
 			}
 			// place and move all circles in the array

@@ -1,2 +1,39 @@
-Interactive data - can mouseover to show time and value
-Use subscription to automatically update data
+--- Front-end interaction ---
+
+Login
+[] Get rid of Google Accounts **
+
+Subscriptions
+[] Real-time updating ***
+[] Use subscription to automatically update data ***
+
+Mouse interaction
+[] Interactive data - can mouseover to show time and value
+
+
+--- Design ---
+
+Navigation
+[] Fill in About page
+[] Fill in Contact page
+[] Make <-- link to choose different visualization
+[] Day navigation
+	[] Make left/right arrows to navigate by day
+	[] Code arrow functionality
+		[] Make link show current date
+[] Week navigation
+	[] Make link for week navigation
+	[] Show 7 column grid
+[] Month navigation
+	[] Show month grids based on day of the week for whole year
+
+Styling
+[x] Get rid of black border in new Raphael API
+[x] 5 min data
+
+Visualizations
+[] Bucket (1) **
+
+Text
+[x] Show 'December 12, 2011' instead of 2011-12-12
+

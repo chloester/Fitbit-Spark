@@ -21,7 +21,7 @@ window.onload = function() {
 			// draw circle and add it to spiralArray
 			if (radius > 0) {
 				var circle = paper.circle(ww/2,wh/2,radius);
-				circle.attr({"stroke-width":0, "fill":color, "fill-opacity":0.9});
+				circle.attr({"stroke-width":0, "stroke":"none", "fill":color, "fill-opacity":0.9});
 				//circle.attr({"cx":ww/2, "cy":wh/2});
 				spiralArray.unshift({circle:circle, r:10, theta:0});
 			}
