@@ -19,7 +19,7 @@ var speed = 200; // default:500 fast:100
 
 // time counter
 var time = paper.text(textPadding,textPadding,"");
-time.attr({"text-anchor":"start", "font-size":12, "fill":"#ffffff"});
+time.attr({"text-anchor":"start", "font-size":14, "fill":"#ffffff"});
 
 function setColorDemo(home,out) {
 	var h;
@@ -44,13 +44,13 @@ function setColor(steps) {
 	var h;
 	var s = 0.88;
 	var b = 0.88;
-	if (steps < 330) {
+	if (steps < 220) {
 	    h = Math.random() * 0.33 + 0.61; // purple-pink, hue 0.61-0.94 (219-338)
 	}
-	if (steps >= 330 && steps <= 660) {
+	if (steps >= 220 && steps <= 550) {
 		h = Math.random() * 0.39 + 0.19; // green-blue, hue 0.19-0.58 (68-208)
 	}
-	if (steps > 660) {
+	if (steps > 550) {
 		h = Math.random() * 0.16; // red-yellow, hue 0-0.16 (0-37)
 	}
 	return "hsb("+h+","+s+","+b+")";

@@ -78,11 +78,11 @@ def get_fitbit_name():
         logging.warning("Auth token didn't work: %s"%access_token)
         return ''
 
-def get_intraday_steps():
+def get_intraday_steps(date):
     user = users.get_current_user().email()
     ts = FitbitToken.getFor(user)
     access_token = oauth.OAuthToken.from_string(ts.access_token)
-    oauth_request = request_oauth_resource(CONSUMER, GET_INTRADAY_STEPS, access_token)
+    oauth_request = request_oauth_resource(CONSUMER, GET_INTRADAY_STEPS%(date.year, date.month, date.day), access_token)
     json = fetch_response(oauth_request)
     #logging.info("json result of get intraday steps: %s"%json)
     return json

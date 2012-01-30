@@ -12,6 +12,8 @@ For example the *say_hello* handler, handling the URL route '/hello/<username>',
 """
 
 import datetime
+from datetime import date
+from datetime import timedelta
 import time
 import logging
 
@@ -37,11 +39,6 @@ def inject_var():
     if context["user"]:
         context["ts"] = fitbit.FitbitToken.getFor(context["user"].email())
         context["logout_url"] = users.create_logout_url("/")
-        context["raw"] = simplejson.loads(fitbit.get_intraday_steps())
-        context["log1m"] = context["raw"]["activities-log-steps-intraday"]["dataset"]
-        context["log5m"] = convert5m(context["log1m"])
-        context["date"] = convertdate(context["raw"]["activities-log-steps"][0]["dateTime"])
-        context["total"] = context["raw"]["activities-log-steps"][0]["value"]
     return context
     
 def convert5m(l):
@@ -75,13 +72,30 @@ def demo_flora():
     return render_template("demo-flora.html")
     
 def spiral():
-    return render_template("spiral.html")
+    return vis_date("spiral",None,None,None)
+
+def vis_date(vis, year, month, day):
+    if year is None:
+        new_date = date.today()
+    else:
+        new_date = date(year, month, day)
+    context = {}
+    context["raw"] = simplejson.loads(fitbit.get_intraday_steps(new_date))
+    context["log1m"] = context["raw"]["activities-log-steps-intraday"]["dataset"]
+    context["log5m"] = convert5m(context["log1m"])
+    context["date"] = convertdate(context["raw"]["activities-log-steps"][0]["dateTime"])
+    context["total"] = context["raw"]["activities-log-steps"][0]["value"]
+    prev_date = new_date - timedelta(days=1)
+    next_date = new_date + timedelta(days=1)
+    context["prev_url"] = "/%s/%d/%02d/%02d" %(vis, prev_date.year, prev_date.month, prev_date.day)
+    context["next_url"] = "/%s/%d/%02d/%02d" %(vis, next_date.year, next_date.month, next_date.day)
+    return render_template(vis+".html", **context)
     
 def flora():
-    return render_template("flora.html")
+    return vis_date("flora",None,None,None)
     
 def bucket():
-    return render_template("bucket.html")
+    return vis_date("bucket",None,None,None)
 
 def say_hello(username):
     """Contrived example to demonstrate Flask's url routing capabilities"""

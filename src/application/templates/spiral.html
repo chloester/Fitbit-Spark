@@ -25,7 +25,7 @@ window.onload = function() {
 			time.attr("text",log[i].time);
 
 			// set up new circle
-			var radius = log[i].value/(window.innerHeight/60);
+			var radius = log[i].value/(window.innerHeight/40);
 			var color = setColor(log[i].value);
 			// draw circle and add it to spiralArray
 			if (radius > 0) {

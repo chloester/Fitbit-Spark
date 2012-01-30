@@ -30,7 +30,7 @@ CONSUMER_SECRET = application.secret_keys.CONSUMER_SECRET
 # We use this URL to check if Fitbit's oAuth worked
 BASE = 'https://api.fitbit.com'
 GET_USER_INFO = '%s/1/user/-/profile.json' %BASE
-GET_INTRADAY_STEPS = '%s/1/user/-/activities/log/steps/date/2012-01-13/1d.json' %BASE
+GET_INTRADAY_STEPS = BASE + '/1/user/-/activities/log/steps/date/%d-%02d-%02d/1d.json'
 
 def request_oauth_resource(consumer, url, access_token, parameters=None, signature_method=signature_method, http_method="GET"):
     """

@@ -32,7 +32,8 @@ Styling
 [x] 5 min data
 
 Visualizations
-[] Bucket (1) **
+[x] Bucket (1) **
+[] Put faint white line around spiral to see where beginning of day is
 
 Text
 [x] Show 'December 12, 2011' instead of 2011-12-12
