@@ -34,7 +34,7 @@ app.add_url_rule('/demo-flora', 'demo-flora', view_func=views.demo_flora)
 app.add_url_rule('/spiral', 'spiral', view_func=views.spiral)
 app.add_url_rule('/flora', 'flora', view_func=views.flora)
 app.add_url_rule('/bucket', 'bucket', view_func=views.bucket)
-
+app.add_url_rule('/pollock', 'pollock', view_func=views.pollock)
 app.add_url_rule('/<vis>/<int:year>/<int:month>/<int:day>', 'vis-date', view_func=views.vis_date)
 
 # Raw data

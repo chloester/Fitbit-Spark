@@ -1,0 +1,66 @@
+{% extends "vis_base.html" %}
+
+{% block title %}Pollock{% endblock %}
+
+{% block graph_script %}
+<script>
+window.onload = function() {
+	var log = {{log5m|tojson|safe}}; // log[index].value
+	var size = log.length
+	// init variables needed for vis
+	var i = 0;
+	var speed = 0;
+	var x = ww/2;
+	var y = wh/2;
+	var xend, yend, controlx, controly, thickness;
+	setInterval(update,speed);
+
+	function update() {
+		if(i != size) {
+			time.attr("text",log[i].time);
+			
+			var radius = log[i].value*(wh/7000);
+			var color = setColor(log[i].value);
+			
+			var span = 300;
+			// randomize end and control pts
+			xend = x + span/2 - Math.random()*span;
+			yend = y + span/2 - Math.random()*span;
+			if (xend < 0) xend += span;
+			if (xend > ww) xend -= span;
+			if (yend < 0) yend += span;
+			if (yend > wh) yend -= span;
+			
+			if(!controlx) {
+				controlx = (x+xend)/2 + 1 - Math.random()*2;
+				controly = (y+yend)/2 + 1 - Math.random()*2;
+			}
+			else {
+				//console.log(x, y, controlx, controly);
+				controlx = x + (x - controlx) / 2;
+				controly = y + (y - controly) / 2;
+			}
+			
+			//thickness = Math.random()*9+1;
+			thickness = 2;
+			
+			// start drawing path, picking up from where it last left off
+			var trail = paper.path("M"+x+","+y+"T"+controlx+","+controly+"T"+xend+","+yend);
+			trail.attr({"stroke-width":thickness, "stroke":"#FFFFFF", "stroke-opacity":0.3});
+
+			// draw circle when there is step count at end of path
+			if (log[i].value > 0) {
+				var circle = paper.circle(xend,yend,radius);
+				circle.attr({"stroke-width":0, "stroke":"none", "fill":color, "fill-opacity":0.7});
+				circle.toFront();
+			}
+			
+			i++;
+			// set next start to current end
+			x = xend;
+			y = yend;
+		}
+	}
+}
+</script>
+{% endblock %}

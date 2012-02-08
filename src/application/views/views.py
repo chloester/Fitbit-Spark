@@ -96,6 +96,9 @@ def flora():
     
 def bucket():
     return vis_date("bucket",None,None,None)
+    
+def pollock():
+    return vis_date("pollock",None,None,None)
 
 def say_hello(username):
     """Contrived example to demonstrate Flask's url routing capabilities"""

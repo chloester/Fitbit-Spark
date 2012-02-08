@@ -73,7 +73,6 @@ function setColorRGB(steps) {
     
     rgb = hsv2rgb(h,s,l);
     
-    console.log(rgb)
     return rgb;
 }
 
