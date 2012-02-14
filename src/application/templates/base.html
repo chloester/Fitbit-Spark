@@ -14,7 +14,7 @@
 	<![endif]-->
 
 	<!-- Styles -->
-	<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/css/bootstrap.min.css">
 	<link href="/static/css/main.css" rel="stylesheet">
 
 	<!-- Fav and touch icons -->
@@ -52,24 +52,23 @@
 		<!--<![endif]-->
 		{% block body %}
 
-		<div class="topbar">
-			<div class="fill">
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
 				<div class="container">
-					{% block header %}
-					<h3><a href="/">✼ Spark</a></h3>
-					<ul>
-						<li class="active"><a href="/">Home</a></li>
-						{% if not ts %}
-						<li><a href="/demo-spiral">Spiral demo</a></li>
-						<li><a href="/demo-flora">Flora demo</a></li>
+						{% block header %}
+						<h3><a class="brand" href="/">✼ Spark</a></h3>
+						<ul class="nav">
+							<li class="active"><a href="/">Home</a></li>
+							{% if not ts %}
+							<li><a href="/demo-spiral">Spiral demo</a></li>
+							<li><a href="/demo-flora">Flora demo</a></li>
+							{% endif %}
+							<li><a href="/about">About</a></li>
+						</ul>
+						{% endblock %}
+						{% if logout_url %}
+						<p class="navbar-text pull-right"><a href="{{logout_url}}">Logout</a></p>
 						{% endif %}
-						<li><a href="/about">About</a></li>
-						<li><a href="/contact">Contact</a></li>
-					</ul>
-					{% endblock %}
-					{% if logout_url %}
-					<p class="pull-right"><a href="{{logout_url}}">Logout</a></p>
-					{% endif %}
 				</div>
 			</div>
 		</div>
@@ -79,7 +78,7 @@
 
 			{% endblock %}
 
-			<footer>
+			<footer class="footer">
 				{% block footer %}
 				<p>&copy; <a href="http://www.chloefan.com">Chloe Fan</a> 2011</p>
 				{% endblock %}

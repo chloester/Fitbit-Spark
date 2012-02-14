@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row">
+	<div class="span8">
+		
+		<h2>About Spark</h2>
+		<p>Spark is a collection of visualizations for Fitbit physical activity data. The purpose is to explore fun, engaging, and creative ways of visualizing exercise. Spark uses different metaphors to represent different features of physical exercise, such as time, step count, and elevation (planned).</p>
+		<p>With Spark, you can:
+			<ul class="unstyled features">
+				<li>✼ See your Fitbit data visualized live</li>
+				<li class="planned">✼ Interact with the visualizations (soon)</li>
+				<li class="planned">✼ View Sparks over a week, month, or year (planned)</li>
+			</ul>
+		</p>
+		<p>
+			I would love to hear your feedback on features and visualizations!
+		</p>
+		
+		<h2>Story</h2>
+		<p>Spark was based on one of eight concept ideas I had for my PhD research on technology that motivates older adults to exercise: using exercise to dynamically generate artwork that is displayed in the home. Given my <a href="http://www.chloefan.com/projects/">past work on interactive art</a> and my newfound interest in data visualization, I wasted no time implementing Spark, starting December 1, 2011.</p>
+		
+		<h2>Colophon</h2>
+		<p>This site is designed using <a href="http://twitter.github.com/bootstrap">Twitter Bootstrap</a>. The front-end is written in <a href="http://jquery.com/">JQuery</a>, with the data visualizations created in <a href="http://raphaeljs.com/">Raphaël</a>, HTML5 Canvas, and <a href="http://www.highcharts.com/">HighCharts</a>. The back-end is in Python, <a href="http://flask.pocoo.org/">Flask</a>, and <a href="http://jinja.pocoo.org/docs/">Jinja2</a> on <a href="http://code.google.com/appengine/">Google App Engine</a>.
+		</p>
+	</div>
+	<div class="span4">
+		<h2>Contact</h2>
+		<p>
+			<i class="icon-info-sign icon-white"></i>
+			<a href="http://www.chloefan.com">Chloe Fan</a>
+		</p>
+		<p>
+			<i class="icon-envelope icon-white"></i>
+			<a href="mailto:chloe@chloefan.com">Email Chloe</a>
+		</p>
+	</div>
+</div>
+
+{% endblock %}

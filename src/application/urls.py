@@ -40,6 +40,9 @@ app.add_url_rule('/<vis>/<int:year>/<int:month>/<int:day>', 'vis-date', view_fun
 # Raw data
 app.add_url_rule('/raw', 'raw', view_func=views.raw)
 
+# About/Contact
+app.add_url_rule('/about', 'about', view_func=views.about)
+
 # Say hello
 app.add_url_rule('/hello/<username>', 'say_hello', view_func=views.say_hello)
 

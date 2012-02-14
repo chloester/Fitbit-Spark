@@ -106,6 +106,9 @@ def say_hello(username):
 
 def raw():
     return render_template("raw.html", data=fitbit.get_intraday_steps())
+    
+def about():
+    return render_template("about.html")
 
 def list_examples():
     """List all examples"""

@@ -20,13 +20,15 @@
 {% else %}
 <!-- Logged in -->
 <div class="row">
-	<h2>Choose a visualization</h2>
-	<ul class="media-grid">
-		<li><a href="/spiral"><img class="thumbnail" src="/static/img/spiral.png"></a></li>
-		<li><a href="/flora"><img class="thumbnail" src="/static/img/flora.png"></a></li>
-		<li><a href="/bucket"><img class="thumbnail" src="/static/img/bucket.png"></a></li>
-		<li><a href="/pollock"><img class="thumbnail" src="/static/img/pollock.png"></a></li>
-	</ul>
+	<div span="12">
+		<h2>Choose a visualization</h2>
+		<ul class="thumbnails">
+			<li class="span4"><a href="/spiral" class="thumbnail" ><img src="/static/img/spiral.png"></a></li>
+			<li class="span4"><a href="/flora" class="thumbnail" ><img src="/static/img/flora.png"></a></li>
+			<li class="span4"><a href="/bucket" class="thumbnail" ><img src="/static/img/bucket.png"></a></li>
+			<li class="span4"><a href="/pollock" class="thumbnail" ><img src="/static/img/pollock.png"></a></li>
+		</ul>
+	</div>
 </div>
 {% endif %}
 

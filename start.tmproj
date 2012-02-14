@@ -440,14 +440,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>84</integer>
+				<integer>24</integer>
 				<key>line</key>
-				<integer>53</integer>
+				<integer>9</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>10</integer>
+			<integer>0</integer>
 		</dict>
 		<key>src/application/templates/raw.html</key>
 		<dict>
@@ -647,6 +647,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{467, 4}, {725, 742}}</string>
+	<string>{{-740, 6}, {725, 779}}</string>
 </dict>
 </plist>
