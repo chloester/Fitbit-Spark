@@ -37,8 +37,10 @@ app.add_url_rule('/bucket', 'bucket', view_func=views.bucket)
 app.add_url_rule('/pollock', 'pollock', view_func=views.pollock)
 app.add_url_rule('/<vis>/<int:year>/<int:month>/<int:day>', 'vis-date', view_func=views.vis_date)
 
+app.add_url_rule('/column', 'column', view_func=views.column)
+
 # Raw data
-app.add_url_rule('/raw', 'raw', view_func=views.raw)
+# app.add_url_rule('/raw', 'raw', view_func=views.raw)
 
 # About/Contact
 app.add_url_rule('/about', 'about', view_func=views.about)

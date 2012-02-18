@@ -4,8 +4,28 @@ var homeIndex = 2; // boolean: home or not // demo only
 var outIndex = 3; // boolean: outside or not // demo only
 
 var margin = window.innerWidth*.1;
-var ww = 940;
-var wh = window.innerHeight-200;
+
+var ww = 920;
+var wh = 600;
+
+if (document.body && document.body.offsetWidth) {
+    ww = document.body.offsetWidth;
+    wh = document.body.offsetHeight-200;
+}
+if (document.compatMode=='CSS1Compat' &&
+document.documentElement &&
+document.documentElement.offsetWidth ) {
+    ww = document.documentElement.offsetWidth;
+    wh = document.documentElement.offsetHeight-200;
+}
+if (window.screen) {
+    ww = window.screen.width;
+    wh = window.screen.height-200;
+} 
+if (window.innerWidth && window.innerHeight) {
+    ww = 920;
+    wh = window.innerHeight-200;
+}
 
 var paper = Raphael("graph",ww,wh);
 var xStart = margin;

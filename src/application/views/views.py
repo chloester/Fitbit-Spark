@@ -89,6 +89,9 @@ def vis_date(vis, year, month, day):
     next_date = new_date + timedelta(days=1)
     context["prev_url"] = "/%s/%d/%02d/%02d" %(vis, prev_date.year, prev_date.month, prev_date.day)
     context["next_url"] = "/%s/%d/%02d/%02d" %(vis, next_date.year, next_date.month, next_date.day)
+    context["year"] = year
+    context["month"] = month
+    context["day"] = day
     return render_template(vis+".html", **context)
     
 def flora():
@@ -99,13 +102,16 @@ def bucket():
     
 def pollock():
     return vis_date("pollock",None,None,None)
+    
+def column():
+    return vis_date("column",None,None,None)
 
 def say_hello(username):
     """Contrived example to demonstrate Flask's url routing capabilities"""
     return 'Hello %s' % username
 
-def raw():
-    return render_template("raw.html", data=fitbit.get_intraday_steps())
+#def raw():
+    #return render_template("raw.html", data=fitbit.get_intraday_steps())
     
 def about():
     return render_template("about.html")
