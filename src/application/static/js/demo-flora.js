@@ -3,7 +3,7 @@ window.onload = function() {
 	// init variables needed for flora
 	var i = 0;
 	var floraArray = [];
-	var totalR = 0;
+	var totalRadius = 0;
 	
 	setInterval(update,speed);
 
@@ -14,10 +14,10 @@ window.onload = function() {
 			// // with gaps
 			// // set up new circle
 			// if (demolog[i][stepsIndex] > 0) {
-			// 	var radius = demolog[i][stepsIndex]/50+totalR; // default:/15
+			// 	var radius = demolog[i][stepsIndex]/50+totalRadius; // default:/15
 			// 	var color = setColorDemo(demolog[i][homeIndex],demolog[i][outIndex]);
 			// } else {
-			// 	var radius = 1 + totalR;
+			// 	var radius = 1 + totalRadius;
 			// 	var color = "hsb(0,0,0)";
 			// }
 			// // draw circle and add it to floraArray
@@ -29,7 +29,7 @@ window.onload = function() {
 			
 			// without gaps
 			// set up new circle
-			var radius = demolog[i][stepsIndex]/50+totalR;
+			var radius = demolog[i][stepsIndex]/50+totalRadius;
 			var color = setColorDemo(demolog[i][homeIndex],demolog[i][outIndex]);
 
 			// draw circle and add it to floraArray
@@ -43,7 +43,7 @@ window.onload = function() {
 			// rounded edges based on speed
 			// fade at night, or other transient animation
 			
-			totalR = radius;
+			totalRadius = radius;
 			i++;
 		}
 	}

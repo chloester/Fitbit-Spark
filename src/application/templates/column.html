@@ -7,14 +7,14 @@
 <script>
 var chart;
 var log = {{log5m|tojson|safe}}; // log[index].value
-var size = log.length;
+var logSize = log.length;
 var year = {{year}};
 var month = {{month}};
 var day = {{day}};
 
 var dataArr = [];
 
-for(var i = 0; i < size; i++) {
+for(var i = 0; i < logSize; i++) {
 	var hourStr = (log[i].time).slice(0,2);
 	var minuteStr = (log[i].time).slice(3,5);
 	var hour, minute;

@@ -23,9 +23,11 @@ if (window.screen) {
     wh = window.screen.height-200;
 } 
 if (window.innerWidth && window.innerHeight) {
-    ww = 920;
+    ww = window.innerWidth;
     wh = window.innerHeight-200;
 }
+if (ww > 920) ww = 920;
+if (wh < 100) wh = 100;
 
 var paper = Raphael("graph",ww,wh);
 var xStart = margin;
@@ -40,6 +42,10 @@ var speed = 200; // default:500 fast:100
 // time counter
 var time = paper.text(textPadding,textPadding,"");
 time.attr({"text-anchor":"start", "font-size":14, "fill":"#ffffff"});
+
+// labels
+var timeLabel;
+var valueLabel;
 
 function setColorDemo(home,out) {
 	var h;
@@ -64,20 +70,23 @@ function setColor(steps) {
 	var h;
 	var s = 0.88;
 	var b = 0.88;
-	if (steps < 220) {
-	    h = Math.random() * 0.33 + 0.61; // purple-pink, hue 0.61-0.94 (219-338)
+	if (steps < 440) {
+	    h = 0.58 - 2*(steps/440 * (0.58-0.19)); // blue-green, hue 0.58-0.19 (208-68)
+	    //h = Math.random() * 0.33 + 0.61; 
 	}
-	if (steps >= 220 && steps <= 550) {
-		h = Math.random() * 0.39 + 0.19; // green-blue, hue 0.19-0.58 (68-208)
+	if (steps >= 440 && steps <= 880) {
+	    h = 0.16 - (steps-440)/(880-440) * 0.16; // yellow-red, hue 0.16-0 (37-0)
+		//h = Math.random() * 0.39 + 0.19; 
 	}
-	if (steps > 550) {
-		h = Math.random() * 0.16; // red-yellow, hue 0-0.16 (0-37)
+	if (steps > 880) {
+	    h = 0.94 - (steps-880)/(1600-880) * (0.94-0.63); // pink-purple, hue 0.94-0.61 (338-219)
+		//h = Math.random() * 0.16; 
 	}
 	return "hsb("+h+","+s+","+b+")";
 }
 
 function setColorRGB(steps) {
-    // same as above, but for Canvas fillStyle
+    // same as above, but for Bucket viz's Canvas fillStyle
     var h;
 	var s = Math.random() * 0.55 + 0.33;
 	var l = 0.88;
@@ -145,3 +154,17 @@ function hsv2rgb(h,s,v) {
     }
     return "rgb(" + RGB['red'] + "," + RGB['green'] + "," + RGB['blue'] + ")";  
 };
+
+// specifies which elements should show time+value label on mouseover
+function createInteraction(elements, timeLabel, valueLabel) {
+	for(var i = 0; i < elements.length; i++) {
+		elements[i].mouseover(function () {
+		    timeLabel.show();
+        	valueLabel.show();
+		});
+		elements[i].mouseout(function () {
+		    timeLabel.hide();
+        	valueLabel.hide();
+		});
+	}
+}

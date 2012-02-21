@@ -11,9 +11,7 @@ For example the *say_hello* handler, handling the URL route '/hello/<username>',
 
 """
 
-import datetime
-from datetime import date
-from datetime import timedelta
+from datetime import datetime, date, timedelta
 import time
 import logging
 
@@ -61,6 +59,13 @@ def convertdate(s):
     t1 = time.strptime(s,'%Y-%m-%d')
     t2 = time.strftime('%A, %B %d, %Y',t1)
     return t2
+    
+def checkIsToday(d):
+    today = date.today()
+    if (d.month == today.month and d.day == today.day and d.year == today.year):
+        return "true"
+    else:
+        return "false"
 
 def home():
     return render_template('home.html')
@@ -75,11 +80,12 @@ def spiral():
     return vis_date("spiral",None,None,None)
 
 def vis_date(vis, year, month, day):
+    context = {}
     if year is None:
-        new_date = date.today()
+        new_date = (datetime.utcnow() - timedelta(hours=8)).date()
     else:
         new_date = date(year, month, day)
-    context = {}
+    context["isToday"] = checkIsToday(new_date);
     context["raw"] = simplejson.loads(fitbit.get_intraday_steps(new_date))
     context["log1m"] = context["raw"]["activities-log-steps-intraday"]["dataset"]
     context["log5m"] = convert5m(context["log1m"])

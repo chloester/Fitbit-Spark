@@ -6,7 +6,7 @@
 <script>
 window.onload = function() {
 	var log = {{log5m|tojson|safe}}; // log[index].value
-	var size = log.length
+	var logSize = log.length
 	var increment = 1; // x-minute increments
 
 	// init variables needed for circles and spiral
@@ -21,7 +21,7 @@ window.onload = function() {
 	setInterval(update,speed);
 
 	function update() {
-		if(i != size) {
+		if(i != logSize) {
 			time.attr("text",log[i].time);
 
 			// set up new circle
@@ -31,8 +31,21 @@ window.onload = function() {
 			if (radius > 0) {
 				var circle = paper.circle(ww/2,wh/2,radius);
 				circle.attr({"stroke-width":0, "stroke":"none", "fill":color, "fill-opacity":0.9});
-				spiralArray.unshift({circle:circle, r:10, theta:0});
+				
+				// add labels
+				timeLabel = paper.text(ww/2, wh/2, (log[i].time).slice(0,5));
+				timeLabel.attr({fill: "#fff", "font-size":"14px"}).hide();
+
+				valueLabel = paper.text(ww/2, wh/2, log[i].value);
+				valueLabel.attr({fill: "#fff"}).hide();
+				
+				var interactiveElements = [circle,valueLabel];
+				createInteraction(interactiveElements, timeLabel, valueLabel);
+				
+				// add to spiralArray for animation
+				spiralArray.unshift({circle:circle, r:10, theta:0, valueLabel:valueLabel});
 			}
+			
 			// place and move all circles in the array
 			for (var j = 0; j < spiralArray.length; j++) {
 				updateCircle(spiralArray[j]);
@@ -47,10 +60,13 @@ window.onload = function() {
 		c.r += rVelocity;
 		c.theta += thetaVelocity;
 		newcx = c.r * Math.cos(c.theta);
+		newx = newcx + ww/2;
 		newcy = c.r * Math.sin(c.theta);
+		newy = newcy + wh/2;
 		oldfill = c.circle.attr("fill-opacity");
 		if (oldfill > 0.01) {
-			c.circle.animate({cx:(ww/2)+newcx, cy:(wh/2)+newcy, "fill-opacity":(ww/2-c.r)/(ww/2)},speed);
+			c.circle.animate({cx: newx, cy: newy, "fill-opacity":(ww/2-c.r)/(ww/2)},speed);
+			c.valueLabel.attr({x: newx, y: newy});
 		} else {
 			c.circle.remove();
 		}

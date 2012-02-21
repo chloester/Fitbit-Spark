@@ -6,21 +6,25 @@ Login
 Subscriptions
 [] Real-time updating ***
 [] Use subscription to automatically update data ***
+[x] Use JS to refresh page every 5 mins
+[] Use AJAX to auto add to today's graph, instead of redoing animation
 
 Mouse interaction
-[] Interactive data - can mouseover to show time and value
+[x] Interactive data - can mouseover to show time and value
 
+Time zone
+[x] Time zone needs to be in user's time zone. Right now looks like GMT. # set to PST
 
 --- Design ---
 
 Navigation
-[] Fill in About page
-[] Fill in Contact page
-[] Make <-- link to choose different visualization
-[] Day navigation
-	[] Make left/right arrows to navigate by day
-	[] Code arrow functionality
-		[] Make link show current date
+[x] Fill in About page
+[x] Fill in Contact page
+[x] Make <-- link to choose different visualization
+[x] Day navigation
+	[x] Make left/right arrows to navigate by day
+	[x] Code arrow functionality
+		[x] Make link show current date
 [] Week navigation
 	[] Make link for week navigation
 	[] Show 7 column grid
@@ -34,7 +38,18 @@ Styling
 Visualizations
 [x] Bucket (1) **
 [] Put faint white line around spiral to see where beginning of day is
+[x] Change color to be proportional to steps, not random
 
 Text
 [x] Show 'December 12, 2011' instead of 2011-12-12
 
+Demo
+[] Change demos to actual sample vis
+	When click on demo link (before login), takes you to Choose Visualization
+	Each visualization = one day of data (2011-11-29)
+
+
+--- Tablet ---
+[] Auto refresh not happening on tablets
+[] Use finger gestures as mouse events (tap = hover/click)
+[] Why does it start a day after the current day?

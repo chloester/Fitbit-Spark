@@ -31,3 +31,9 @@ a:hover {
 .planned {
     color:#888;
 }
+
+.linkback {
+    text-align:right;
+    vertical-align:bottom;
+    padding-top:18px; /* Hack to make it align bottom */
+}
