@@ -52,4 +52,4 @@ Demo
 --- Tablet ---
 [] Auto refresh not happening on tablets
 [] Use finger gestures as mouse events (tap = hover/click)
-[] Why does it start a day after the current day?
+[x] Why does it start a day after the current day?

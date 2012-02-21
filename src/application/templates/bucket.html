@@ -131,7 +131,7 @@ function createBall( x, y, size, steps ) {
 
 	var graphics = element.getContext("2d");
 
-	//for circles within circles pattern
+	//for concentric circles pattern
 	var num_circles = Math.random() * 10;
 
 	for (var i = size; i > 0; i-= (size/num_circles)) {

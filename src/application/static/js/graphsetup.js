@@ -71,15 +71,15 @@ function setColor(steps) {
 	var s = 0.88;
 	var b = 0.88;
 	if (steps < 440) {
-	    h = 0.58 - 2*(steps/440 * (0.58-0.19)); // blue-green, hue 0.58-0.19 (208-68)
+	    h = 0.67 - (steps/440 * (0.67-0.19)); // blue-green, hue 0.67-0.19 (243-68)
 	    //h = Math.random() * 0.33 + 0.61; 
 	}
 	if (steps >= 440 && steps <= 880) {
-	    h = 0.16 - (steps-440)/(880-440) * 0.16; // yellow-red, hue 0.16-0 (37-0)
+	    h = 0.16 - ((steps-440)/(880-440) * 0.16); // yellow-red, hue 0.16-0 (60-0)
 		//h = Math.random() * 0.39 + 0.19; 
 	}
 	if (steps > 880) {
-	    h = 0.94 - (steps-880)/(1600-880) * (0.94-0.63); // pink-purple, hue 0.94-0.61 (338-219)
+	    h = 0.94 - (steps-880)/(1600-880) * (0.94-0.73); // pink-purple, hue 0.94-0.73 (338-264)
 		//h = Math.random() * 0.16; 
 	}
 	return "hsb("+h+","+s+","+b+")";
@@ -88,16 +88,19 @@ function setColor(steps) {
 function setColorRGB(steps) {
     // same as above, but for Bucket viz's Canvas fillStyle
     var h;
-	var s = Math.random() * 0.55 + 0.33;
+	var s = Math.random() * 0.66 + 0.33;
 	var l = 0.88;
-	if (steps < 220) {
-	    h = Math.random() * 0.33 + 0.61; // purple-pink, hue 0.61-0.94 (219-338)
+	if (steps < 440) {
+	    h = 0.67 - (steps/440 * (0.67-0.19)); // blue-green, hue 0.67-0.19 (243-68)
+	    //h = Math.random() * 0.33 + 0.61; // purple-pink, hue 0.61-0.94 (219-338)
 	}
-	if (steps >= 220 && steps <= 550) {
-		h = Math.random() * 0.39 + 0.19; // green-blue, hue 0.19-0.58 (68-208)
+	if (steps >= 440 && steps <= 880) {
+	    h = 0.16 - ((steps-440)/(880-440) * 0.16); // yellow-red, hue 0.16-0 (60-0)
+		//h = Math.random() * 0.39 + 0.19; // green-blue, hue 0.19-0.58 (68-208)
 	}
-	if (steps > 550) {
-		h = Math.random() * 0.16; // red-yellow, hue 0-0.16 (0-37)
+	if (steps > 880) {
+	    h = 0.94 - (steps-880)/(1600-880) * (0.94-0.73); // pink-purple, hue 0.94-0.73 (338-264)
+		//h = Math.random() * 0.16; // red-yellow, hue 0-0.16 (0-37)
 	}
     
     rgb = hsv2rgb(h,s,l);
@@ -160,6 +163,7 @@ function createInteraction(elements, timeLabel, valueLabel) {
 	for(var i = 0; i < elements.length; i++) {
 		elements[i].mouseover(function () {
 		    timeLabel.show();
+		    timeLabel.toFront();
         	valueLabel.show();
 		});
 		elements[i].mouseout(function () {
