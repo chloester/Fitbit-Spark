@@ -31,9 +31,19 @@ var logSize;
 // for 1 min log, range should be 110-145 steps, max = 264
 // for 5 min log, range should be 550-725 steps, max = 1320
 // TODO set color using elevation instead of step count
-var lowStepRange = 550;
-var highStepRange = 725;
-var maxStepRange = 1320;
+
+var lowRangeOfWalkingSpeed = 2.5;
+var highRangeOfWalkingSpeed = 3.5;
+var runningSpeed = 6;
+var strideLength = 2.4;
+var FEET_PER_MILE = 5280;
+var MINS_PER_HOUR = 60;
+var logInterval = 5;
+
+var lowStepRange = (lowRangeOfWalkingSpeed * FEET_PER_MILE)/MINS_PER_HOUR/strideLength * logInterval;
+var highStepRange = (highRangeOfWalkingSpeed * FEET_PER_MILE)/MINS_PER_HOUR/strideLength * logInterval;
+var maxStepRange = (runningSpeed * FEET_PER_MILE)/MINS_PER_HOUR/strideLength * logInterval;
+console.log(lowStepRange, highStepRange, maxStepRange);
 
 function setColorDemo(home,out) {
 	var h;

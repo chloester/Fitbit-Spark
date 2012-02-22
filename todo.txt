@@ -7,7 +7,7 @@ Subscriptions
 [] Real-time updating ***
 [] Use subscription to automatically update data ***
 [x] Use JS to refresh page every 5 mins
-[] Use AJAX to auto add to today's graph, instead of redoing animation
+[x] Use AJAX to auto add to today's graph, instead of redoing animation
 
 Mouse interaction
 [x] Interactive data - can mouseover to show time and value
@@ -16,6 +16,9 @@ Time zone
 [x] Time zone needs to be in user's time zone. Right now looks like GMT. # set to PST
 
 --- Design ---
+
+Calculating step count
+Stride length increases as running faster
 
 Navigation
 [x] Fill in About page
@@ -50,6 +53,6 @@ Demo
 
 
 --- Tablet ---
-[] Auto refresh not happening on tablets
-[] Use finger gestures as mouse events (tap = hover/click)
+[x] Auto refresh not happening on tablets
+[x] Use finger gestures as mouse events (tap = hover/click)
 [x] Why does it start a day after the current day?
