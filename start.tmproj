@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>src/application/static/js/graphsetup.js</string>
+	<string>src/application/templates/column.html</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -43,6 +43,20 @@
 				<integer>0</integer>
 				<key>line</key>
 				<integer>27</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>src/application/templates/column.html</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>18</integer>
+				<key>line</key>
+				<integer>19</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -137,6 +151,7 @@
 	<key>openDocuments</key>
 	<array>
 		<string>src/application/static/js/graphsetup.js</string>
+		<string>src/application/templates/column.html</string>
 		<string>src/application/views/fitbit_api/utils.py</string>
 		<string>src/application/views/views.py</string>
 		<string>src/application/views/fitbit_api/fitbit.py</string>
@@ -148,6 +163,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{506, 4}, {836, 742}}</string>
+	<string>{{506, 4}, {742, 742}}</string>
 </dict>
 </plist>

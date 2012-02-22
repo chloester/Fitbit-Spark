@@ -6,13 +6,23 @@
 <script src="/static/js/highcharts.js"></script>
 <script>
 var chart;
-var log = {{log5m|tojson|safe}}; // log[index].value
-var logSize = log.length;
+log = {{log5m|tojson|safe}}; // log[index].value
+logSize = log.length;
 var year = {{year}};
 var month = {{month}};
 var day = {{day}};
 
 var dataArr = [];
+
+calculateTotalSteps(log);
+
+if({{isToday}} == true) {
+	setInterval(refreshPage, 60000);
+}
+
+function refreshPage() {
+	location.reload();
+}
 
 for(var i = 0; i < logSize; i++) {
 	var hourStr = (log[i].time).slice(0,2);
