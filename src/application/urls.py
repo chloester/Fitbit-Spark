@@ -26,13 +26,9 @@ app.add_url_rule('/fitbit/unauth', 'fitbit-unauth', view_func=fitbit.unauth)
 app.add_url_rule('/fitbit/auth', 'fitbit-auth', view_func=fitbit.auth)
 app.add_url_rule('/fitbit/return', 'fitbit-return', view_func=fitbit.return_)
 
-# Demo pages
-app.add_url_rule('/demo-spiral', 'demo-spiral', view_func=views.demo_spiral)
-app.add_url_rule('/demo-flora', 'demo-flora', view_func=views.demo_flora)
-
 # Visualizations
 app.add_url_rule('/spiral', 'spiral', view_func=views.spiral)
-app.add_url_rule('/flora', 'flora', view_func=views.flora)
+app.add_url_rule('/rings', 'rings', view_func=views.rings)
 app.add_url_rule('/bucket', 'bucket', view_func=views.bucket)
 app.add_url_rule('/pollock', 'pollock', view_func=views.pollock)
 app.add_url_rule('/<vis>/<int:year>/<int:month>/<int:day>', 'vis-date', view_func=views.vis_date)
@@ -40,7 +36,7 @@ app.add_url_rule('/<vis>/<int:year>/<int:month>/<int:day>', 'vis-date', view_fun
 app.add_url_rule('/column', 'column', view_func=views.column)
 
 # Raw data
-# app.add_url_rule('/raw', 'raw', view_func=views.raw)
+app.add_url_rule('/raw', 'raw', view_func=views.raw)
 
 # About/Contact
 app.add_url_rule('/about', 'about', view_func=views.about)

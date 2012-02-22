@@ -39,12 +39,12 @@ def inject_var():
         context["logout_url"] = users.create_logout_url("/")
     return context
     
-def convert5m(l):
+def convert5m(log):
     """ Turn 1 minute intraday log into 5 minute log """
     new_list = []
     new_entry = {}
     total = 0
-    for entry in l:
+    for entry in log:
         total += int(entry["value"])
         if entry["time"][4] in ("0","5"):
             new_entry["time"] = entry["time"]
@@ -61,7 +61,7 @@ def convertdate(s):
     return t2
     
 def checkIsToday(d):
-    today = date.today()
+    today = (datetime.utcnow() - timedelta(hours=8)).date()
     if (d.month == today.month and d.day == today.day and d.year == today.year):
         return "true"
     else:
@@ -69,12 +69,6 @@ def checkIsToday(d):
 
 def home():
     return render_template('home.html')
-
-def demo_spiral():
-    return render_template("demo-spiral.html")
-
-def demo_flora():
-    return render_template("demo-flora.html")
     
 def spiral():
     return vis_date("spiral",None,None,None)
@@ -90,18 +84,18 @@ def vis_date(vis, year, month, day):
     context["log1m"] = context["raw"]["activities-log-steps-intraday"]["dataset"]
     context["log5m"] = convert5m(context["log1m"])
     context["date"] = convertdate(context["raw"]["activities-log-steps"][0]["dateTime"])
-    context["total"] = context["raw"]["activities-log-steps"][0]["value"]
+    #context["total"] = context["raw"]["activities-log-steps"][0]["value"]
     prev_date = new_date - timedelta(days=1)
     next_date = new_date + timedelta(days=1)
     context["prev_url"] = "/%s/%d/%02d/%02d" %(vis, prev_date.year, prev_date.month, prev_date.day)
     context["next_url"] = "/%s/%d/%02d/%02d" %(vis, next_date.year, next_date.month, next_date.day)
-    context["year"] = year
-    context["month"] = month
-    context["day"] = day
+    context["year"] = new_date.year
+    context["month"] = new_date.month
+    context["day"] = new_date.day
     return render_template(vis+".html", **context)
     
-def flora():
-    return vis_date("flora",None,None,None)
+def rings():
+    return vis_date("rings",None,None,None)
     
 def bucket():
     return vis_date("bucket",None,None,None)
@@ -116,8 +110,12 @@ def say_hello(username):
     """Contrived example to demonstrate Flask's url routing capabilities"""
     return 'Hello %s' % username
 
-#def raw():
-    #return render_template("raw.html", data=fitbit.get_intraday_steps())
+def raw():
+    raw = fitbit.get_intraday_steps((datetime.utcnow() - timedelta(hours=8)).date())
+    rawdict = simplejson.loads(raw)
+    log1m = rawdict["activities-log-steps-intraday"]["dataset"]
+    log5m = convert5m(log1m)
+    return simplejson.dumps(log5m)
     
 def about():
     return render_template("about.html")

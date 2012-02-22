@@ -1,18 +1,22 @@
 {% extends "vis_base.html" %}
 
-{% block title %}Flora{% endblock %}
+{% block title %}Rings{% endblock %}
 
 {% block graph_script %}
 <script>
 window.onload = function() {
-	var log = {{log5m|tojson|safe}}; // log[index].value
-	var logSize = log.length
-	// init variables needed for flora
+	log = {{log5m|tojson|safe}};
+	logSize = log.length;
+	calculateTotalSteps(log);
+	
+	// init variables needed for rings
 	var i = 0;
-	var floraArray = [];
+	var ringsArray = [];
 	var totalRadius = 0;
-	var speed = 0;
-	setInterval(update,speed);
+	setInterval(update,speedOfAnimation);
+	if({{isToday}} == true) {
+		setInterval(updateLog, 60000);
+	}
 	
 	var mouseX;
 	var mouseY;
@@ -28,17 +32,17 @@ window.onload = function() {
 			time.attr("text",log[i].time);
 			
 			// set up new circle
-			var radius = log[i].value*(wh/30000)+totalRadius;
+			var radius = log[i].value*(divHeight/40000)+totalRadius;
 			var color = setColor(log[i].value);
 
-			// draw circle and add it to floraArray
+			// draw circle and add it to ringsArray
 			if (log[i].value > 0) {
-				var circle = paper.circle(ww/2,wh/2,radius);
+				var circle = paper.circle(divWidth/2,divHeight/2,radius);
 				circle.attr({"stroke-width":0, "stroke":"none", "fill":color, "fill-opacity":0.9});
 				circle.toBack();
 				
 				// add labels
-				var timeLabel = paper.text(ww/2, wh/2, (log[i].time).slice(0,5));
+				var timeLabel = paper.text(divWidth/2, divHeight/2, (log[i].time).slice(0,5));
 				timeLabel.attr({fill: "#fff", "font-size":"14px"}).hide();
 				
 				var valueLabel = paper.text(mouseX, mouseY, log[i].value);

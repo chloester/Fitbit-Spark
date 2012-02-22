@@ -1,43 +1,17 @@
-var dateIndex = 0;
-var stepsIndex = 1;
-var homeIndex = 2; // boolean: home or not // demo only
-var outIndex = 3; // boolean: outside or not // demo only
+var divWidth = 920;
+var divHeight = 600;
 
-var margin = window.innerWidth*.1;
-
-var ww = 920;
-var wh = 600;
-
-if (document.body && document.body.offsetWidth) {
-    ww = document.body.offsetWidth;
-    wh = document.body.offsetHeight-200;
-}
-if (document.compatMode=='CSS1Compat' &&
-document.documentElement &&
-document.documentElement.offsetWidth ) {
-    ww = document.documentElement.offsetWidth;
-    wh = document.documentElement.offsetHeight-200;
-}
-if (window.screen) {
-    ww = window.screen.width;
-    wh = window.screen.height-200;
-} 
 if (window.innerWidth && window.innerHeight) {
-    ww = window.innerWidth;
-    wh = window.innerHeight-200;
+    divWidth = window.innerWidth;
+    divHeight = window.innerHeight-200;
 }
-if (ww > 920) ww = 920;
-if (wh < 100) wh = 100;
+if (divWidth > 920) divWidth = 920;
+if (divHeight < 100) divHeight = 100;
 
-var paper = Raphael("graph",ww,wh);
-var xStart = margin;
-var yStart = wh/2;
-var xLoc = xStart;
-var yLoc = yStart;
-var pathString = "M"+xStart+" "+yStart;
+var paper = Raphael("graph",divWidth,divHeight);
 
 var textPadding = 10;
-var speed = 200; // default:500 fast:100
+var speedOfAnimation = 0;
 
 // time counter
 var time = paper.text(textPadding,textPadding,"");
@@ -46,6 +20,20 @@ time.attr({"text-anchor":"start", "font-size":14, "fill":"#ffffff"});
 // labels
 var timeLabel;
 var valueLabel;
+
+// log
+var log;
+var logSize;
+
+// steps
+// assuming average walking speed = 2.5-3.3 mph, max running speed = 6mph 
+// formula: ((mph x 5280)/60) / 2 for steps/min (assuming 2' stride)
+// for 1 min log, range should be 110-145 steps, max = 264
+// for 5 min log, range should be 550-725 steps, max = 1320
+// TODO set color using elevation instead of step count
+var lowStepRange = 550;
+var highStepRange = 725;
+var maxStepRange = 1320;
 
 function setColorDemo(home,out) {
 	var h;
@@ -64,52 +52,41 @@ function setColorDemo(home,out) {
 }
 
 function setColor(steps) {
-    // for 1 min log, interval should be 88,176
-    // for 5 min log, interval should be 440,880 (2-4mph average walk)
-    // TODO set color using elevation instead of step count
-	var h;
+	var h = calculateHueFromSteps(steps, lowStepRange, highStepRange, maxStepRange);
 	var s = 0.88;
 	var b = 0.88;
-	if (steps < 440) {
-	    h = 0.67 - (steps/440 * (0.67-0.19)); // blue-green, hue 0.67-0.19 (243-68)
-	    //h = Math.random() * 0.33 + 0.61; 
-	}
-	if (steps >= 440 && steps <= 880) {
-	    h = 0.16 - ((steps-440)/(880-440) * 0.16); // yellow-red, hue 0.16-0 (60-0)
-		//h = Math.random() * 0.39 + 0.19; 
-	}
-	if (steps > 880) {
-	    h = 0.94 - (steps-880)/(1600-880) * (0.94-0.73); // pink-purple, hue 0.94-0.73 (338-264)
-		//h = Math.random() * 0.16; 
-	}
+
 	return "hsb("+h+","+s+","+b+")";
 }
 
+function calculateHueFromSteps(steps, lowStepRange, highStepRange, maxStepRange) {
+    if (steps < lowStepRange) {
+        // blue-green, hue 0.67-0.19 (243-68)
+	    return 0.67 - (steps/lowStepRange * (0.67-0.19)); 	    
+	}
+	if (steps >= lowStepRange && steps <= highStepRange) {
+	    // yellow-red, hue 0.16-0 (60-0)
+	    return 0.16 - ((steps-lowStepRange)/(highStepRange-lowStepRange) * 0.16);
+	}
+	if (steps > highStepRange) {
+	    // pink-purple, hue 0.94-0.73 (338-264)
+	    return 0.94 - (steps-highStepRange)/(maxStepRange-highStepRange) * (0.94-0.73); 
+	}
+}
+
 function setColorRGB(steps) {
-    // same as above, but for Bucket viz's Canvas fillStyle
-    var h;
+    // same as setColor, but for Bucket viz's Canvas fillStyle
+    var h = calculateHueFromSteps(steps, lowStepRange, highStepRange, maxStepRange);
 	var s = Math.random() * 0.66 + 0.33;
-	var l = 0.88;
-	if (steps < 440) {
-	    h = 0.67 - (steps/440 * (0.67-0.19)); // blue-green, hue 0.67-0.19 (243-68)
-	    //h = Math.random() * 0.33 + 0.61; // purple-pink, hue 0.61-0.94 (219-338)
-	}
-	if (steps >= 440 && steps <= 880) {
-	    h = 0.16 - ((steps-440)/(880-440) * 0.16); // yellow-red, hue 0.16-0 (60-0)
-		//h = Math.random() * 0.39 + 0.19; // green-blue, hue 0.19-0.58 (68-208)
-	}
-	if (steps > 880) {
-	    h = 0.94 - (steps-880)/(1600-880) * (0.94-0.73); // pink-purple, hue 0.94-0.73 (338-264)
-		//h = Math.random() * 0.16; // red-yellow, hue 0-0.16 (0-37)
-	}
-    
-    rgb = hsv2rgb(h,s,l);
+	var v = 0.88;
+
+    rgb = hsv2rgb(h,s,v);
     
     return rgb;
 }
 
 function hsv2rgb(h,s,v) {
-    // Adapted from http://www.easyrgb.com/math.html
+    // Adapted from http://divWidthw.easyrgb.com/math.html
     // by http://jsres.blogspot.com/2008/01/convert-hsv-to-rgb-equivalent.html
     // hsv values = 0 - 1, rgb values = 0 - 255
     var r, g, b;
@@ -165,10 +142,32 @@ function createInteraction(elements, timeLabel, valueLabel) {
 		    timeLabel.show();
 		    timeLabel.toFront();
         	valueLabel.show();
+        	valueLabel.toFront();
 		});
 		elements[i].mouseout(function () {
 		    timeLabel.hide();
         	valueLabel.hide();
 		});
 	}
+}
+
+function updateLog() {
+    console.log("Updating log...");
+	$.getJSON('/raw', function(data, textStatus, jqXHR) {
+		log = data;
+		logSize = log.length;
+		time.attr("text",log[log.length-1].time);
+		
+        calculateTotalSteps(log);
+	});
+}
+
+function calculateTotalSteps(log) {
+    var newTotal = 0;
+	for(var i = 0; i < logSize; i++) {
+	    newTotal += log[i].value;
+	}
+	$('#totalSteps').text(newTotal);
+	
+	return newTotal;
 }

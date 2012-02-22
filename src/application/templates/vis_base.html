@@ -1,4 +1,4 @@
-{% extends "demo_base.html" %}
+{% extends "base.html" %}
 
 {% block content %}
 <div class="row">
@@ -9,17 +9,12 @@
 		<a href="/">&larr; Choose another visualization</a>
 	</div>
 </div>
-<h1>{{total}}<small> total steps</small></h1>
+<h1><span id="totalSteps"></span><small> total steps</small></h1>
 
 <div id="graph"></div>
 {% endblock %}
 
 {% block footer_script %}
-<script>
-	if({{isToday}} == true) {
-		setTimeout("location.reload(true);",300000);
-	}
-</script>
 <script src="/static/js/raphael-min.js"></script>
 <script src="/static/js/popup.js"></script>
 <script src="/static/js/graphsetup.js"></script>

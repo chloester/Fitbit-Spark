@@ -5,21 +5,25 @@
 {% block graph_script %}
 <script>
 window.onload = function() {
-	var log = {{log5m|tojson|safe}}; // log[index].value
-	var logSize = log.length
+	log = {{log5m|tojson|safe}};
+	logSize = log.length;
+	calculateTotalSteps(log);
+	
 	// init variables needed for vis
 	var i = 0;
-	var speed = 50;
-	var x = ww/2;
-	var y = wh/2;
+	var x = divWidth/2;
+	var y = divHeight/2;
 	var xend, yend, controlx, controly, thickness;
-	setInterval(update,speed);
+	setInterval(update,speedOfAnimation);
+	if({{isToday}} == true) {
+		setInterval(updateLog, 60000);
+	}
 
 	function update() {
 		if(i != logSize) {
 			time.attr("text",log[i].time);
 			
-			var radius = log[i].value*(wh/7000);
+			var radius = log[i].value*(divHeight/7000);
 			var color = setColor(log[i].value);
 			
 			var span = 300;
@@ -27,9 +31,9 @@ window.onload = function() {
 			xend = x + span/2 - Math.random()*span;
 			yend = y + span/2 - Math.random()*span;
 			if (xend < 0) xend += span;
-			if (xend > ww) xend -= span;
+			if (xend > divWidth) xend -= span;
 			if (yend < 0) yend += span;
-			if (yend > wh) yend -= span;
+			if (yend > divHeight) yend -= span;
 			
 			if(!controlx) {
 				controlx = (x+xend)/2 + 1 - Math.random()*2;

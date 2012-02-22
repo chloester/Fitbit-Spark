@@ -5,38 +5,40 @@
 {% block graph_script %}
 <script>
 window.onload = function() {
-	var log = {{log5m|tojson|safe}}; // log[index].value
-	var logSize = log.length
-	var increment = 1; // x-minute increments
+	log = {{log5m|tojson|safe}};
+	logSize = log.length;
+	calculateTotalSteps(log);
 
 	// init variables needed for circles and spiral
 	var i = 0;
 	var spiralArray = [];
 	// circle's spiral path
 	var deg = 20;
-	var rVelocity = 1.2; // speed at which distance from center increases log1m:0.3, log5m:1
+	var rVelocity = 1.2; // speed at which distance from center increases log1m:0.3, log5m:1.2
 	var thetaVelocity = deg*Math.PI/180; // angle at which dot moves along spiral
 
-	var speed = 0;
-	setInterval(update,speed);
+	setInterval(animate,speedOfAnimation);
+	if({{isToday}} == true) {
+		setInterval(updateLog, 60000);
+	}
 
-	function update() {
+	function animate() {
 		if(i != logSize) {
 			time.attr("text",log[i].time);
 
 			// set up new circle
-			var radius = log[i].value*(wh/10000);
+			var radius = log[i].value*(divHeight/10000);
 			var color = setColor(log[i].value);
 			// draw circle and add it to spiralArray
 			if (radius > 0) {
-				var circle = paper.circle(ww/2,wh/2,radius);
+				var circle = paper.circle(divWidth/2,divHeight/2,radius);
 				circle.attr({"stroke-width":0, "stroke":"none", "fill":color, "fill-opacity":0.9});
 				
 				// add labels
-				timeLabel = paper.text(ww/2, wh/2, (log[i].time).slice(0,5));
+				timeLabel = paper.text(divWidth/2, divHeight/2, (log[i].time).slice(0,5));
 				timeLabel.attr({fill: "#fff", "font-size":"14px"}).hide();
 
-				valueLabel = paper.text(ww/2, wh/2, log[i].value);
+				valueLabel = paper.text(divWidth/2, divHeight/2, log[i].value);
 				valueLabel.attr({fill: "#fff"}).hide();
 				
 				var interactiveElements = [circle,valueLabel];
@@ -60,12 +62,12 @@ window.onload = function() {
 		c.r += rVelocity;
 		c.theta += thetaVelocity;
 		newcx = c.r * Math.cos(c.theta);
-		newx = newcx + ww/2;
+		newx = newcx + divWidth/2;
 		newcy = c.r * Math.sin(c.theta);
-		newy = newcy + wh/2;
+		newy = newcy + divHeight/2;
 		oldfill = c.circle.attr("fill-opacity");
 		if (oldfill > 0.01) {
-			c.circle.animate({cx: newx, cy: newy, "fill-opacity":(ww/2-c.r)/(ww/2)},speed);
+			c.circle.animate({cx: newx, cy: newy, "fill-opacity":(divWidth/2-c.r)/(divWidth/2)},speedOfAnimation);
 			c.valueLabel.attr({x: newx, y: newy});
 		} else {
 			c.circle.remove();

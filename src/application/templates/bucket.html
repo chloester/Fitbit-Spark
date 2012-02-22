@@ -41,11 +41,16 @@ var PI2 = Math.PI * 2;
 var timeOfLastTouch = 0;
 
 // set up log
-var log = {{log5m|tojson|safe}}; // log[index].value
-var size = log.length;
+log = {{log5m|tojson|safe}}; // log[index].value
+logSize = log.length;
+calculateTotalSteps(log);
+var counter = 0;
 
 var maxSteps = 20000; // steps to fill the screen
-var stepsToday = {{total}};
+
+if({{isToday}} == true) {
+	setInterval(updateLog, 60000);
+}
 
 init();
 play();
@@ -205,13 +210,24 @@ function loop() {
 //
 
 function readLog() {
-	if(log.length != 0) {
-		var entry = log.shift();
+	// if(logSize != 0) {
+	// 		var entry = log.shift();
+	// 		var steps = entry.value;
+	// 		var area = stage[2]*stage[3]/maxSteps * steps;
+	// 		var diameter = 2*Math.sqrt(area/Math.PI);
+	// 		if (steps > 0) createBall(divWidth/2,100,diameter,steps);
+	// 		time.attr("text",entry.time);
+	// 	}
+	if(counter != logSize) {
+		
+		var entry = log[counter];
 		var steps = entry.value;
 		var area = stage[2]*stage[3]/maxSteps * steps;
 		var diameter = 2*Math.sqrt(area/Math.PI);
-		if (entry.value > 0) createBall(ww/2,100,diameter,steps);
+		if (steps > 0) createBall(divWidth/2,100,diameter,steps);
 		time.attr("text",entry.time);
+		
+		counter++;
 	}
 }
 
