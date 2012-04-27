@@ -79,7 +79,7 @@ def vis_date(vis, year, month, day):
         new_date = (datetime.utcnow() - timedelta(hours=8)).date()
     else:
         new_date = date(year, month, day)
-    context["isToday"] = checkIsToday(new_date);
+    context["isToday"] = checkIsToday(new_date)
     context["raw"] = simplejson.loads(fitbit.get_intraday_steps(new_date))
     context["log1m"] = context["raw"]["activities-log-steps-intraday"]["dataset"]
     context["log5m"] = convert5m(context["log1m"])
