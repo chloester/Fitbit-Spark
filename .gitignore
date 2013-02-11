@@ -16,3 +16,4 @@ secret_keys.py
 
 # Not until we get a private repo for this
 scripts
+/start.tmproj
